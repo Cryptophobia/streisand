@@ -21,15 +21,16 @@ Shadowsocks
    1. Enter `{{ shadowsocks_server_port }}` as the *Server Port*.
    1. Enter `{{ shadowsocks_password.stdout }}` as the *Password*.
    1. The *SOCKS 5 Proxy Port* should be `{{ shadowsocks_local_port }}` and the *Encryption Method* should be `{{ shadowsocks_encryption_method }}`.
+   1. Ensure that support for One-time Authentication (OTA) is enabled.
    1. Click *Save*.
 1. Click on the Shadowsocks menu tray icon and select *Enable*.
 1. That's it! You can verify that your traffic is being routed properly by [looking up your IP address on Google](https://encrypted.google.com/search?hl=en&q=ip%20address). It should say *Your public IP address is {{ streisand_ipv4_address }}*.
 
 <a name="osx"></a>
 ### OS X ###
-1. Download [ShadowsocksX](/mirror/#shadowsocks).
+1. Download [ShadowsocksX-NG](/mirror/#shadowsocks).
 1. Double-click the DMG, and drag the icon into your Applications folder.
-1. Launch ShadowsocksX. You will be prompted to enter your password so that your system proxy settings can be modified.
+1. Launch ShadowsocksX-NG. You will be prompted to enter your password so that your system proxy settings can be modified.
 1. Look for the Shadowsocks paper plane icon in your menu bar and click on it.
 1. Make sure the QR code below is centered and completely visible, and choose *Scan QR Code from Screen...*
 
@@ -38,6 +39,7 @@ Shadowsocks
    1. Enter `{{ streisand_ipv4_address }}` and `{{ shadowsocks_server_port }}` in the *Address* fields.
    1. Make sure `{{ shadowsocks_encryption_method }}` is selected for the *Encryption* value.
    1. Enter `{{ shadowsocks_password.stdout }}` as the *Password*.
+   1. Check `Enable OTA`.
    1. Click *OK*.
 1. Click on the Shadowsocks icon in the menu bar again, and choose *Global Mode*.
 1. You can use the Shadowsocks icon to enable/disable the VPN. The color of the icon will change based on whether or not it is active.
@@ -55,6 +57,7 @@ Here is the configuration information that you'll need:
         Port: {{ shadowsocks_server_port }}
         Password: {{ shadowsocks_password.stdout }}
         Encryption Method: {{ shadowsocks_encryption_method }}
+        One-time Authentication: {{ shadowsocks_enable_ota }}
 
 Once you have Shadowsocks running locally, you'll need to forward your browser traffic through the SOCKS proxy it provides.
 

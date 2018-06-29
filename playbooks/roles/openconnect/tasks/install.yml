@@ -1,0 +1,26 @@
+---
+- name: Enable the Universe repository
+  apt_repository:
+    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
+    state: present
+
+- name: Install ocserv
+  apt:
+    name: ocserv
+
+- name: Create the OpenConnect rsyslog configuration directory
+  file:
+    path: /etc/rsyslog.d/openconnect.d/
+    owner: root
+    group: root
+    mode: 0644
+    state: directory
+
+- name: Copy the modified rsyslog configuration into place that prevents OpenConnect traffic from being logged
+  copy:
+    src: openconnect.conf
+    dest: /etc/rsyslog.d/openconnect.d/openconnect.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart rsyslog for OpenConnect

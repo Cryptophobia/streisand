@@ -1,4 +1,6 @@
 ---
 dependencies:
-  - { role: diffie-hellman-group }
-  - { role: rc-local }
+  # OpenVPN needs to be added to the firewall
+  - { role: ufw }
+  - { role: dnsmasq }
+  - { role: ip-forwarding }

@@ -2,7 +2,7 @@ dev tun
 ca ca.crt
 cert server.crt
 key server.key  # This file should be kept secret
-dh {{ dhparams_location }}
+dh none
 ifconfig-pool-persist ipp.txt
 push "redirect-gateway def1"
 
@@ -12,13 +12,23 @@ push block-outside-dns
 
 client-to-client
 remote-cert-tls client
-duplicate-cn
-keepalive 10 120
-tls-auth ta.key 0 # This file is secret
+
+# Allow multiple clients with the same common name to concurrently connect.
+# In the absence of this option, OpenVPN will disconnect a client instance
+# upon connection of a new client having the same common name.
+# duplicate-cn
+
+keepalive 1800 3600
+tls-crypt ta.key # This file is secret
 cipher {{ openvpn_cipher }}
+ncp-ciphers {{ openvpn_ncp_ciphers }}
+
+# limit the tls ciphers
+tls-cipher TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384
+
 auth {{ openvpn_auth_digest }}
 tls-version-min 1.2
-comp-lzo
+compress lz4
 user nobody
 group nogroup
 persist-key
